@@ -15,6 +15,9 @@
         android:theme="@style/Theme.YPracticumCurrencyConverter"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.exchangerate.ExchangeRateActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.currencies.CurrenciesActivity"
             android:exported="false" />
         <activity

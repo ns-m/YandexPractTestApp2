@@ -8,7 +8,7 @@ class NetworkModule {
 
     private static ExchangerRateService exchangerRateService;
 
-    static ExchangerRateService getExchangerRateService() {
+    ExchangerRateService getExchangerRateService() {
         if (exchangerRateService == null) {
             exchangerRateService = createExchangerRateService();
         }

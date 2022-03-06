@@ -15,6 +15,9 @@
     <string name="currencies_title">Currencies</string>
     <string name="currencies_icon_content_description">Currency Icon</string>
 
+    <!-- Exchange Rate Screen -->
+    <string name="exchange_rate_title">Exchange Rate</string>
+
     <!-- Currencies -->
     <string name="currency_uae_dirham">UAE Dirham</string>
     <string name="currency_afghan_afghani">Afghan Afghani</string>

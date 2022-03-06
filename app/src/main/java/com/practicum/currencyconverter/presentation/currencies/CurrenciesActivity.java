@@ -54,8 +54,8 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
         setContentView(R.layout.activity_currencies);
 
         initViews();
-        currenciesViewModel = new ViewModelProvider(this).get(CurrenciesViewModel.class);
-        currenciesViewModel.getCurrenciesLiveData().observe(this, currenciesAdapter::update);
+        initViewModel();
+
         currenciesViewModel.loadCurrencies();
     }
 
@@ -92,5 +92,10 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
     private void initRecycler() {
         currenciesRecyclerView = findViewById(R.id.currenciesRecyclerView);
         currenciesRecyclerView.setAdapter(currenciesAdapter);
+    }
+
+    private void initViewModel() {
+        currenciesViewModel = new ViewModelProvider(this).get(CurrenciesViewModel.class);
+        currenciesViewModel.getCurrenciesLiveData().observe(this, currenciesAdapter::update);
     }
 }
