@@ -3,10 +3,10 @@ package com.practicum.currencyconverter.presentation.currencies;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import com.practicum.currencyconverter.R;
 import com.practicum.currencyconverter.data.models.Currency;
+import com.practicum.currencyconverter.ui.decorators.HorizontalLineItemDecorator;
 
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
@@ -26,7 +26,6 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
     private CurrenciesViewModel currenciesViewModel;
 
     private Toolbar toolbar;
-    private EditText searchEditText;
     private RecyclerView currenciesRecyclerView;
 
     public static ActivityResultContract<Object, Currency> getContract(final Context packageContext) {
@@ -70,7 +69,6 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
 
     private void initViews() {
         initToolbar();
-        initSearchEditText();
         initRecycler();
     }
 
@@ -82,16 +80,19 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         }
-    }
-
-    private void initSearchEditText() {
-        searchEditText = findViewById(R.id.searchEditText);
     }
 
     private void initRecycler() {
         currenciesRecyclerView = findViewById(R.id.currenciesRecyclerView);
         currenciesRecyclerView.setAdapter(currenciesAdapter);
+
+        final HorizontalLineItemDecorator itemDecoration = new HorizontalLineItemDecorator();
+        itemDecoration.setColor(getResources().getColor(R.color.text_gray, null));
+        itemDecoration.setLeftPadding((int) getResources().getDimension(R.dimen.currency_decorator_padding));
+
+        currenciesRecyclerView.addItemDecoration(itemDecoration);
     }
 
     private void initViewModel() {

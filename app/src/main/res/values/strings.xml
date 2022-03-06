@@ -12,7 +12,7 @@
 
     <!-- Currencies Screen -->
     <string name="currencies_search_hint">Search</string>
-    <string name="currencies_title">Currencies</string>
+    <string name="currencies_title">Currency selection</string>
     <string name="currencies_icon_content_description">Currency Icon</string>
 
     <!-- Exchange Rate Screen -->

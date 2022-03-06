@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Currency Converter</string>
+    <string name="currencies_title">Выбор валюты</string>
+    <string name="currency_australia">Австралийский доллар</string>
+    <string name="currency_canada">Канадски доллар</string>
+    <string name="currency_switzerland">Швейцарский Франк</string>
+    <string name="currency_china">Китайский юань</string>
+    <string name="currency_czech_republic">Чешская крона</string>
+    <string name="currency_denmark">Датская крона</string>
+    <string name="currency_european_union">Евро</string>
+    <string name="currency_united_kingdom">Британский фунт</string>
+    <string name="currency_hong_kong">Гонконгский доллар</string>
+    <string name="currency_japan">Японская йена</string>
+    <string name="currency_mexico">Мексиканский песо</string>
+    <string name="currency_norway">Норвежская крона</string>
+    <string name="currency_new_zealand">Новозеландский доллар</string>
+    <string name="currency_poland">Польский злотый</string>
+    <string name="currency_russia">Российский рубль</string>
+    <string name="currency_sweden">Шведская крона</string>
+    <string name="currency_singapore">Сингапурский доллар</string>
+    <string name="currency_turkey">Турецкая лира</string>
+    <string name="currency_united_states">Доллар США</string>
+    <string name="currency_south_africa">Ранд ЮАР</string>
+</resources>
