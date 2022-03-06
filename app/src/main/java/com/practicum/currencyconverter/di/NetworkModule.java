@@ -4,11 +4,11 @@ import com.practicum.currencyconverter.data.network.ApiProvider;
 import com.practicum.currencyconverter.data.network.ExchangerRateService;
 import com.practicum.currencyconverter.data.network.ExchangerRateUrlProvider;
 
-public class Dependencies {
+class NetworkModule {
 
     private static ExchangerRateService exchangerRateService;
 
-    public static ExchangerRateService getExchangerRateService() {
+    static ExchangerRateService getExchangerRateService() {
         if (exchangerRateService == null) {
             exchangerRateService = createExchangerRateService();
         }

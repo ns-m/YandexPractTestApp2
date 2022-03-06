@@ -3,7 +3,7 @@ package com.practicum.currencyconverter.presentation.converter;
 import com.practicum.currencyconverter.data.models.Currency;
 import com.practicum.currencyconverter.data.models.PairConversation;
 import com.practicum.currencyconverter.data.network.ExchangerRateService;
-import com.practicum.currencyconverter.di.Dependencies;
+import com.practicum.currencyconverter.di.DI;
 import com.practicum.currencyconverter.presentation.base.BaseViewModel;
 
 import androidx.lifecycle.LiveData;
@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class ConverterViewModel extends BaseViewModel {
 
-    private final ExchangerRateService exchangerRateService = Dependencies.getExchangerRateService();
+    private final ExchangerRateService exchangerRateService = DI.exchangerRateService();
 
     private final MutableLiveData<PairConversation> pairConversationLiveData = new MutableLiveData<>();
 
