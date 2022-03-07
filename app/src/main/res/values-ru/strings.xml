@@ -22,4 +22,5 @@
     <string name="currency_turkey">Турецкая лира</string>
     <string name="currency_united_states">Доллар США</string>
     <string name="currency_south_africa">Ранд ЮАР</string>
+    <string name="converter_convert_button_text">Сконвертировать</string>
 </resources>

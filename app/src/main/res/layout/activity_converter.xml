@@ -4,143 +4,185 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    tools:context=".presentation.converter.ConverterActivity">
-
-    <TextView
-        android:id="@+id/smallTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/convertor_small_title"
-        android:textColor="@android:color/holo_green_light"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/converter_title"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/fromHintTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/converter_from_hint"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
-
-    <TextView
-        android:id="@+id/fromTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
-        android:padding="8dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fromHintTextView"
-        tools:text="Algeria" />
-
-    <TextView
-        android:id="@+id/toHintTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/converter_to_hint"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fromTextView" />
-
-    <TextView
-        android:id="@+id/toTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
-        android:padding="8dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toHintTextView"
-        tools:text="Brazil" />
-
-    <TextView
-        android:id="@+id/fromCurrencyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:textAllCaps="true"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toTextView"
-        tools:text="DZD" />
-
-    <EditText
-        android:id="@+id/amountEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints="no"
-        android:background="@android:color/darker_gray"
-        android:hint="@string/converter_amount_hint"
-        android:inputType="number"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fromCurrencyTextView" />
+    android:paddingVertical="24dp"
+    tools:context=".presentation.converter.ConverterActivity"
+    tools:ignore="LabelFor">
 
     <Button
         android:id="@+id/convertButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_blue_button"
         android:text="@string/converter_convert_button_text"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAppearance="@style/Text.Bold.16_20.White"
+        app:layout_constraintBottom_toBottomOf="@id/refreshButton"
+        app:layout_constraintEnd_toStartOf="@id/refreshButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/amountEditText" />
+        app:layout_constraintTop_toTopOf="@id/refreshButton" />
 
-    <TextView
-        android:id="@+id/resultCurrencyHintTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/converter_result_hint_text"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/convertButton" />
-
-    <TextView
-        android:id="@+id/resultCurrencyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:textAllCaps="true"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/convertButton"
-        tools:text="BRL" />
-
-    <TextView
-        android:id="@+id/resultTextView"
+    <EditText
+        android:id="@+id/fromInputEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
-        android:padding="8dp"
-        android:textSize="18sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="14dp"
+        android:background="@null"
+        android:gravity="end"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:textAppearance="@style/Text.Regular.40"
+        app:layout_constraintBottom_toBottomOf="@id/fromBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fromCurrencyIconImageView"
+        app:layout_constraintTop_toTopOf="@id/fromBackground"
+        tools:text="1" />
+
+    <EditText
+        android:id="@+id/toInputEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="14dp"
+        android:background="@null"
+        android:gravity="end"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:textAppearance="@style/Text.Regular.40"
+        app:layout_constraintBottom_toBottomOf="@id/toBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/toCurrencyIconImageView"
+        app:layout_constraintTop_toTopOf="@id/toBackground"
+        tools:text="154" />
+
+    <ImageButton
+        android:id="@+id/refreshButton"
+        android:layout_width="84dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_blue_button"
+        android:contentDescription="@string/converter_refresh_button_content_description"
+        android:src="@drawable/ic_refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/currencyCourseTextView" />
+
+    <ImageView
+        android:id="@+id/toCurrencyIconImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/converter_to_currency_icon_content_description"
+        android:src="@drawable/ic_russia"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toBackground" />
+
+    <ImageView
+        android:id="@+id/fromCurrencyIconImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/converter_from_currency_icon_content_description"
+        android:src="@drawable/ic_usa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fromBackground" />
+
+    <TextView
+        android:id="@+id/toCurrencyCodeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textAppearance="@style/Text.Regular.16_24"
+        app:layout_constraintEnd_toEndOf="@id/toCurrencyIconImageView"
+        app:layout_constraintStart_toStartOf="@id/toCurrencyIconImageView"
+        app:layout_constraintTop_toBottomOf="@id/toCurrencyIconImageView"
+        tools:text="RUB" />
+
+    <TextView
+        android:id="@+id/fromCurrencyCodeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textAppearance="@style/Text.Regular.16_24"
+        app:layout_constraintEnd_toEndOf="@id/fromCurrencyIconImageView"
+        app:layout_constraintStart_toStartOf="@id/fromCurrencyIconImageView"
+        app:layout_constraintTop_toBottomOf="@id/fromCurrencyIconImageView"
+        tools:text="USD" />
+
+    <TextView
+        android:id="@+id/currencyChangeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textAppearance="@style/Text.Regular.12_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resultCurrencyHintTextView"
-        tools:text="1000.21" />
+        app:layout_constraintTop_toBottomOf="@id/toBackground"
+        tools:text="+2,03 (3,67%) за сегодня" />
+
+    <TextView
+        android:id="@+id/currencyCourseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAllCaps="true"
+        android:textAppearance="@style/Text.Regular.12_14.Gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/currencyChangeTextView"
+        tools:text="1 USD = 125 RUB" />
+
+    <View
+        android:id="@+id/fromBackground"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/red_10" />
+
+    <View
+        android:id="@+id/toBackground"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fromBackground" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/text_gray"
+        app:layout_constraintBottom_toBottomOf="@id/fromBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/text_gray"
+        app:layout_constraintBottom_toBottomOf="@id/toBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/swapFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/converter_swap_button_content_description"
+        android:src="@drawable/ic_swap"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/toBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fromBackground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

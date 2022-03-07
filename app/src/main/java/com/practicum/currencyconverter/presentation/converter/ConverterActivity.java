@@ -1,76 +1,66 @@
 package com.practicum.currencyconverter.presentation.converter;
 
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.util.Pair;
 
-import com.practicum.currencyconverter.R;
 import com.practicum.currencyconverter.data.models.Currency;
+import com.practicum.currencyconverter.databinding.ActivityConverterBinding;
 import com.practicum.currencyconverter.presentation.currencies.CurrenciesActivity;
-import com.practicum.currencyconverter.presentation.exchangerate.ExchangeRateActivity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 public class ConverterActivity extends AppCompatActivity {
 
     private ConverterViewModel converterViewModel;
-    private final ActivityResultLauncher<Object> currencyScreenLauncher =
+    private final ActivityResultLauncher<CurrencyInput> currencyScreenLauncher =
             registerForActivityResult(CurrenciesActivity.getContract(this), this::handleCurrencyResult);
-    private final ActivityResultLauncher<Currency> exchangeRateScreenLauncher =
-            registerForActivityResult(ExchangeRateActivity.getContract(this), this::handleExchangeRateResult);
 
-    private TextView fromTextView;
-    private TextView toTextView;
-    private TextView fromCurrencyTextView;
-    private EditText amountEditText;
-    private Button convertButton;
-    private TextView resultCurrencyTextView;
-    private TextView resultTextView;
+    private ActivityConverterBinding binding;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_converter);
+        binding = ActivityConverterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        initViews();
-
-        converterViewModel = new ViewModelProvider(this).get(ConverterViewModel.class);
-        converterViewModel.getPairConversationLiveData().observe(this, pairConversationDto -> {
-        });
+        initView();
+        initViewModel();
 
         converterViewModel.getCurrencyRate(Currency.USD, Currency.RUB);
     }
 
-    private void initViews() {
-        fromTextView = findViewById(R.id.fromTextView);
-        fromTextView.setOnClickListener(v -> openCurrencies());
-
-        toTextView = findViewById(R.id.toTextView);
-        toTextView.setOnClickListener(v -> openExchangeRate());
-
-        fromCurrencyTextView = findViewById(R.id.fromCurrencyTextView);
-        amountEditText = findViewById(R.id.amountEditText);
-        convertButton = findViewById(R.id.convertButton);
-        resultCurrencyTextView = findViewById(R.id.resultCurrencyTextView);
-        resultTextView = findViewById(R.id.resultTextView);
+    private void initView() {
+        binding.fromCurrencyIconImageView.setOnClickListener(v -> openCurrencies(CurrencyInput.FROM));
+        binding.toCurrencyIconImageView.setOnClickListener(v -> openCurrencies(CurrencyInput.TO));
     }
 
-    private void openCurrencies() {
-        currencyScreenLauncher.launch(null);
+    private void initViewModel() {
+        converterViewModel = new ViewModelProvider(this).get(ConverterViewModel.class);
+        converterViewModel.getPairConversationLiveData().observe(this, pairConversationDto -> {
+        });
     }
 
-    private void openExchangeRate() {
-        exchangeRateScreenLauncher.launch(Currency.RUB);
+    private void openCurrencies(final CurrencyInput currencyInput) {
+        currencyScreenLauncher.launch(currencyInput);
     }
 
-    private void handleCurrencyResult(final Currency currency) {
-        fromTextView.setText(currency.getName());
-    }
+    private void handleCurrencyResult(final Pair<Currency, CurrencyInput> currencyResult) {
+        final CurrencyInput currencyInput = currencyResult.second;
+        final Currency currency = currencyResult.first;
 
-    private void handleExchangeRateResult(final Currency currency) {
-        toTextView.setText(currency.getName());
+        switch (currencyInput) {
+            case FROM:
+                binding.fromCurrencyIconImageView.setImageDrawable(ContextCompat.getDrawable(this, currency.getIcon()));
+                binding.fromCurrencyCodeTextView.setText(currency.getCode());
+                break;
+            case TO:
+                binding.toCurrencyIconImageView.setImageDrawable(ContextCompat.getDrawable(this, currency.getIcon()));
+                binding.toCurrencyCodeTextView.setText(currency.getCode());
+                break;
+        }
     }
 }
