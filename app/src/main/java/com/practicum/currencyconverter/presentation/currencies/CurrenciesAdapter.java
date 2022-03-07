@@ -1,13 +1,10 @@
 package com.practicum.currencyconverter.presentation.currencies;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.practicum.currencyconverter.R;
 import com.practicum.currencyconverter.data.models.Currency;
+import com.practicum.currencyconverter.databinding.ItemCurrencyBinding;
 
 import java.util.List;
 
@@ -28,9 +25,8 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_currency, parent, false);
-
-        return new ViewHolder(view);
+        final ItemCurrencyBinding binding = ItemCurrencyBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -54,24 +50,20 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView iconImageView;
-        private final TextView nameTextView;
-        private final TextView codeTextView;
+        private final ItemCurrencyBinding binding;
 
-        ViewHolder(final View itemView) {
-            super(itemView);
+        ViewHolder(final ItemCurrencyBinding binding) {
+            super(binding.getRoot());
 
-            iconImageView = itemView.findViewById(R.id.iconImageView);
-            nameTextView = itemView.findViewById(R.id.nameTextView);
-            codeTextView = itemView.findViewById(R.id.codeTextView);
+            this.binding = binding;
         }
 
         void bind(final Currency currency, final OnItemClickListener onItemClickListener) {
             itemView.setOnClickListener(v -> onItemClickListener.onItemClick(currency));
 
-            iconImageView.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(), currency.getIcon()));
-            nameTextView.setText(currency.getName());
-            codeTextView.setText(currency.getCode());
+            binding.iconImageView.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(), currency.getIcon()));
+            binding.nameTextView.setText(currency.getName());
+            binding.codeTextView.setText(currency.getCode());
         }
     }
 }

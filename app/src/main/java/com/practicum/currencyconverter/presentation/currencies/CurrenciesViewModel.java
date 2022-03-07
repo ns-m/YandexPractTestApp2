@@ -3,7 +3,6 @@ package com.practicum.currencyconverter.presentation.currencies;
 import com.practicum.currencyconverter.data.models.Currency;
 import com.practicum.currencyconverter.presentation.base.BaseViewModel;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

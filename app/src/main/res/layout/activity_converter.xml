@@ -32,6 +32,7 @@
         android:gravity="end"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
+        android:maxLines="1"
         android:textAppearance="@style/Text.Regular.40"
         app:layout_constraintBottom_toBottomOf="@id/fromBackground"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,28 +40,12 @@
         app:layout_constraintTop_toTopOf="@id/fromBackground"
         tools:text="1" />
 
-    <EditText
-        android:id="@+id/toInputEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="14dp"
-        android:background="@null"
-        android:gravity="end"
-        android:importantForAutofill="no"
-        android:inputType="numberDecimal"
-        android:textAppearance="@style/Text.Regular.40"
-        app:layout_constraintBottom_toBottomOf="@id/toBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/toCurrencyIconImageView"
-        app:layout_constraintTop_toTopOf="@id/toBackground"
-        tools:text="154" />
-
     <ImageButton
         android:id="@+id/refreshButton"
         android:layout_width="84dp"
         android:layout_height="44dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="34dp"
         android:background="@drawable/bg_blue_button"
         android:contentDescription="@string/converter_refresh_button_content_description"
         android:src="@drawable/ic_refresh"
@@ -88,6 +73,21 @@
         android:src="@drawable/ic_usa"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/fromBackground" />
+
+    <TextView
+        android:id="@+id/toResultTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="14dp"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textAppearance="@style/Text.Regular.40"
+        app:layout_constraintBottom_toBottomOf="@id/toBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/toCurrencyIconImageView"
+        app:layout_constraintTop_toTopOf="@id/toBackground"
+        tools:text="154" />
 
     <TextView
         android:id="@+id/toCurrencyCodeTextView"

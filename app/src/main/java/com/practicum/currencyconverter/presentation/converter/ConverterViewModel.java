@@ -6,6 +6,11 @@ import com.practicum.currencyconverter.data.network.ExchangerRateService;
 import com.practicum.currencyconverter.di.DI;
 import com.practicum.currencyconverter.presentation.base.BaseViewModel;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.util.Objects;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
@@ -16,48 +21,85 @@ public class ConverterViewModel extends BaseViewModel {
 
     private final ExchangerRateService exchangerRateService = DI.exchangerRateService();
 
-    private final MutableLiveData<PairConversation> pairConversationLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Currency> fromCurrencyLiveData = new MutableLiveData<>(Currency.USD);
-    private final MutableLiveData<Currency> toCurrencyLiveData = new MutableLiveData<>(Currency.RUB);
+    private final MutableLiveData<ConverterState> converterStateLiveData = new MutableLiveData<>(ConverterState.DEFAULT);
 
-    public LiveData<PairConversation> getPairConversationLiveData() {
-        return pairConversationLiveData;
+    public LiveData<ConverterState> getConverterStateLiveData() {
+        return converterStateLiveData;
     }
 
-    public LiveData<Currency> getFromCurrencyLiveData() {
-        return fromCurrencyLiveData;
-    }
+    public void getCurrencyRate() {
+        exchangerRateService.getPairConversation(currentState().getFromCurrency().getCode(), currentState().getToCurrency().getCode())
+                .enqueue(new Callback<PairConversation>() {
+                    @Override
+                    public void onResponse(@NonNull final Call<PairConversation> call, @NonNull final Response<PairConversation> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            final ConverterState resultState = new ConverterState.Builder(currentState())
+                                    .setCurrencyCourse(response.body().getConversionRate())
+                                    .copy();
 
-    public LiveData<Currency> getToCurrencyLiveData() {
-        return toCurrencyLiveData;
-    }
+                            converterStateLiveData.postValue(resultState);
+                        } else {
+                            // TODO handle error
+                        }
+                    }
 
-    public void getCurrencyRate(final Currency from, final Currency to) {
-        exchangerRateService.getPairConversation(from.getCode(), to.getCode()).enqueue(new Callback<PairConversation>() {
-            @Override
-            public void onResponse(final Call<PairConversation> call, final Response<PairConversation> response) {
-                pairConversationLiveData.postValue(response.body());
-            }
-
-            @Override
-            public void onFailure(final Call<PairConversation> call, final Throwable t) {
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull final Call<PairConversation> call, @NonNull final Throwable error) {
+                        // TODO handle error
+                    }
+                });
     }
 
     public void setFromCurrency(final Currency currency) {
-        fromCurrencyLiveData.postValue(currency);
+        final ConverterState resultState = new ConverterState.Builder(currentState())
+                .setFromCurrency(currency)
+                .copy();
+
+        converterStateLiveData.postValue(resultState);
+        getCurrencyRate();
     }
 
     public void setToCurrency(final Currency currency) {
-        toCurrencyLiveData.postValue(currency);
+        final ConverterState resultState = new ConverterState.Builder(currentState())
+                .setToCurrency(currency)
+                .copy();
+
+        converterStateLiveData.postValue(resultState);
+        getCurrencyRate();
     }
 
     public void swapCurrencies() {
-        final Currency from = fromCurrencyLiveData.getValue();
-        final Currency to = toCurrencyLiveData.getValue();
+        final ConverterState resultState = new ConverterState.Builder(currentState())
+                .setFromCurrency(currentState().getToCurrency())
+                .setToCurrency(currentState().getFromCurrency())
+                .setToCurrencyInput(currentState().getFromCurrencyInput())
+                .setFromCurrencyInput(currentState().getToCurrencyInput())
+                .copy();
 
-        fromCurrencyLiveData.postValue(to);
-        toCurrencyLiveData.postValue(from);
+        converterStateLiveData.postValue(resultState);
+        getCurrencyRate();
+    }
+
+    @NonNull
+    private ConverterState currentState() {
+        return Objects.requireNonNull(converterStateLiveData.getValue());
+    }
+
+    public void convertUserInput(final String fromCurrencyInput) {
+        final DecimalFormat decimalFormat = new DecimalFormat();
+        try {
+            final double result = Objects.requireNonNull(decimalFormat.parse(fromCurrencyInput)).doubleValue();
+            final double toCurrencyInput = result * currentState().getCurrencyCourse();
+
+            final ConverterState resultState = new ConverterState.Builder(currentState())
+                    .setFromCurrencyInput(result)
+                    .setToCurrencyInput(toCurrencyInput)
+                    .copy();
+
+            converterStateLiveData.postValue(resultState);
+        } catch (ParseException e) {
+            // TODO handle error
+        }
+
     }
 }

@@ -13,6 +13,7 @@
     <string name="converter_to_currency_icon_content_description">To Currency Icon</string>
     <string name="converter_refresh_button_content_description">Refresh entered data</string>
     <string name="converter_swap_button_content_description">Swap currencies</string>
+    <string name="converter_currency_cource">1 %1$s = %2$f %3$s</string>
 
     <!-- Currencies Screen -->
     <string name="currencies_search_hint">Search</string>
