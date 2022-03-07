@@ -66,6 +66,7 @@ public class ConverterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(final Editable s) {
                 formatNumber(s, this);
+                setConvertButtonState(s);
             }
         });
     }
@@ -174,5 +175,9 @@ public class ConverterActivity extends AppCompatActivity {
         } catch (ParseException e) {
             // TODO show error
         }
+    }
+
+    private void setConvertButtonState(final Editable s) {
+        binding.convertButton.setEnabled(s.length() > 0);
     }
 }
