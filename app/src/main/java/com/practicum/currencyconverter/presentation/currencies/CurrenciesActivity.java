@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.practicum.currencyconverter.R;
 import com.practicum.currencyconverter.data.models.Currency;
 import com.practicum.currencyconverter.databinding.ActivityCurrenciesBinding;
+import com.practicum.currencyconverter.presentation.base.BaseActivity;
 import com.practicum.currencyconverter.presentation.converter.CurrencyInput;
 import com.practicum.currencyconverter.ui.decorators.HorizontalLineItemDecorator;
 
@@ -16,10 +17,9 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-public class CurrenciesActivity extends AppCompatActivity implements CurrenciesAdapter.OnItemClickListener {
+public class CurrenciesActivity extends BaseActivity<CurrenciesViewModel> implements CurrenciesAdapter.OnItemClickListener {
 
     private static final String ARG_CURRENCY = "arg_currency";
     private static final String ARG_CURRENCY_INPUT = "arg_currency_input";
@@ -27,7 +27,6 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
     private final CurrenciesAdapter currenciesAdapter = new CurrenciesAdapter(this);
 
     private ActivityCurrenciesBinding binding;
-    private CurrenciesViewModel currenciesViewModel;
 
     public static ActivityResultContract<CurrencyInput, Pair<Currency, CurrencyInput>> getContract(final Context packageContext) {
         return new ActivityResultContract<CurrencyInput, Pair<Currency, CurrencyInput>>() {
@@ -62,7 +61,7 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
         initViews();
         initViewModel();
 
-        currenciesViewModel.loadCurrencies();
+        viewModel.loadCurrencies();
     }
 
     @Override
@@ -72,6 +71,11 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected CurrenciesViewModel createViewModel() {
+        return new ViewModelProvider(this).get(CurrenciesViewModel.class);
     }
 
     @Override
@@ -113,7 +117,6 @@ public class CurrenciesActivity extends AppCompatActivity implements CurrenciesA
     }
 
     private void initViewModel() {
-        currenciesViewModel = new ViewModelProvider(this).get(CurrenciesViewModel.class);
-        currenciesViewModel.getCurrenciesLiveData().observe(this, currenciesAdapter::update);
+        viewModel.getCurrenciesLiveData().observe(this, currenciesAdapter::update);
     }
 }

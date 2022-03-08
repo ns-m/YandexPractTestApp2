@@ -127,7 +127,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textAllCaps="true"
         android:textAppearance="@style/Text.Regular.12_14.Gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -184,5 +183,20 @@
         app:layout_constraintBottom_toTopOf="@id/toBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fromBackground" />
+
+    <com.practicum.currencyconverter.ui.ToolDotProgress
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bigDotRadius="8"
+        app:dotColor="@color/text_gray"
+        app:dotCount="3"
+        app:dotStep="30"
+        app:dotTimeout="250"
+        app:layout_constraintBottom_toBottomOf="@+id/currencyCourseTextView"
+        app:layout_constraintEnd_toEndOf="@+id/currencyCourseTextView"
+        app:layout_constraintStart_toStartOf="@+id/currencyCourseTextView"
+        app:layout_constraintTop_toTopOf="@id/currencyCourseTextView"
+        app:smallDotRadius="4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,7 @@ public class ConverterViewModel extends BaseViewModel {
     }
 
     public void getCurrencyRate() {
+        isLoadingLiveData.postValue(true);
         exchangerRateService.getPairConversation(currentState().getFromCurrency().getCode(), currentState().getToCurrency().getCode())
                 .enqueue(new Callback<PairConversation>() {
                     @Override
@@ -38,14 +39,17 @@ public class ConverterViewModel extends BaseViewModel {
                                     .copy();
 
                             converterStateLiveData.postValue(resultState);
+                            isErrorShownLiveData.postValue(false);
                         } else {
-                            // TODO handle error
+                            isErrorShownLiveData.postValue(true);
                         }
+                        isLoadingLiveData.postValue(false);
                     }
 
                     @Override
                     public void onFailure(@NonNull final Call<PairConversation> call, @NonNull final Throwable error) {
-                        // TODO handle error
+                        isLoadingLiveData.postValue(false);
+                        isErrorShownLiveData.postValue(true);
                     }
                 });
     }

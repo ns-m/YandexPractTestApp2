@@ -1,5 +1,6 @@
 package com.practicum.currencyconverter.presentation.converter;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import com.practicum.currencyconverter.R;
 import com.practicum.currencyconverter.data.models.Currency;
 import com.practicum.currencyconverter.databinding.ActivityConverterBinding;
+import com.practicum.currencyconverter.presentation.base.BaseActivity;
 import com.practicum.currencyconverter.presentation.currencies.CurrenciesActivity;
 
 import java.text.DecimalFormat;
@@ -17,13 +19,11 @@ import java.text.ParseException;
 import java.util.Objects;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-public class ConverterActivity extends AppCompatActivity {
+public class ConverterActivity extends BaseActivity<ConverterViewModel> {
 
-    private ConverterViewModel viewModel;
     private final ActivityResultLauncher<CurrencyInput> currencyScreenLauncher =
             registerForActivityResult(CurrenciesActivity.getContract(this), this::handleCurrencyResult);
 
@@ -39,6 +39,35 @@ public class ConverterActivity extends AppCompatActivity {
         initViewModel();
         openKeyBoard();
         viewModel.getCurrencyRate();
+    }
+
+    @Override
+    protected ConverterViewModel createViewModel() {
+        return new ViewModelProvider(this).get(ConverterViewModel.class);
+    }
+
+    @Override
+    protected void showLoader(final boolean isLoading) {
+        if (isLoading) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.currencyCourseTextView.setVisibility(View.GONE);
+        } else {
+            binding.progressBar.setVisibility(View.GONE);
+            binding.currencyCourseTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void handleError(final boolean isShown) {
+        binding.fromInputEditText.setEnabled(!isShown);
+        if (isShown) {
+            binding.currencyCourseTextView.setText(R.string.converter_currency_cource_error);
+            binding.currencyCourseTextView.setTextColor(ContextCompat.getColor(this, R.color.red));
+            binding.fromBackground.setBackgroundColor(ContextCompat.getColor(this, R.color.red_10));
+        } else {
+            binding.currencyCourseTextView.setTextColor(ContextCompat.getColor(this, R.color.text_gray));
+            binding.fromBackground.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     private void initView() {
@@ -72,7 +101,6 @@ public class ConverterActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        viewModel = new ViewModelProvider(this).get(ConverterViewModel.class);
         viewModel.getConverterStateLiveData().observe(this, this::render);
     }
 

@@ -16,9 +16,9 @@ public enum Currency {
     GBP("GBP", R.string.currency_united_kingdom, R.drawable.ic_great_britain),
     HKD("HKD", R.string.currency_hong_kong, R.drawable.ic_hong_kong),
     JPY("JPY", R.string.currency_japan, R.drawable.ic_japan),
-    MXN("MXN", R.string.currency_mexico, R.drawable.ix_mexico),
+    MXN("MXN", R.string.currency_mexico, R.drawable.ix_mexico),// none
     NOK("NOK", R.string.currency_norway, R.drawable.ic_norway),
-    NZD("NZD", R.string.currency_new_zealand, R.drawable.ic_new_zeland),
+    NZD("NZD", R.string.currency_new_zealand, R.drawable.ic_new_zeland), // none
     PLN("PLN", R.string.currency_poland, R.drawable.ic_poland),
     RUB("RUB", R.string.currency_russia, R.drawable.ic_russia),
     SEK("SEK", R.string.currency_sweden, R.drawable.ic_sweden),
