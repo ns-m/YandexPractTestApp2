@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,7 +37,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         initView();
         initViewModel();
         openKeyBoard();
-        viewModel.getCurrencyRate();
+        viewModel.getCurrencyRate(true);
     }
 
     @Override
@@ -133,12 +134,12 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
     }
 
     private void setFromCurrency(final Currency currency) {
-        binding.fromCurrencyIconImageView.setImageDrawable(ContextCompat.getDrawable(this, currency.getIcon()));
+        binding.fromCurrencyIconImageView.setImageDrawable(ContextCompat.getDrawable(this, currency.iconRes()));
         binding.fromCurrencyCodeTextView.setText(currency.getCode());
     }
 
     private void setToCurrency(final Currency currency) {
-        binding.toCurrencyIconImageView.setImageDrawable(ContextCompat.getDrawable(this, currency.getIcon()));
+        binding.toCurrencyIconImageView.setImageDrawable(ContextCompat.getDrawable(this, currency.iconRes()));
         binding.toCurrencyCodeTextView.setText(currency.getCode());
     }
 

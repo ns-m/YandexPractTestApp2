@@ -1,8 +1,10 @@
 package com.practicum.currencyconverter.presentation.converter;
 
+import com.practicum.currencyconverter.data.CurrenciesConverter;
+import com.practicum.currencyconverter.data.cache.CurrencyCourseDataStore;
 import com.practicum.currencyconverter.data.models.Currency;
-import com.practicum.currencyconverter.data.models.PairConversation;
-import com.practicum.currencyconverter.data.network.ExchangerRateService;
+import com.practicum.currencyconverter.data.models.CurrencyRate;
+import com.practicum.currencyconverter.data.network.ResultCallback;
 import com.practicum.currencyconverter.di.DI;
 import com.practicum.currencyconverter.presentation.base.BaseViewModel;
 
@@ -13,13 +15,11 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ConverterViewModel extends BaseViewModel {
 
-    private final ExchangerRateService exchangerRateService = DI.exchangerRateService();
+    private final CurrencyCourseDataStore currencyCourseDataStore = DI.currencyCourseDataStore();
+    private final CurrenciesConverter currenciesConverter = DI.currenciesConverter();
 
     private final MutableLiveData<ConverterState> converterStateLiveData = new MutableLiveData<>(ConverterState.DEFAULT);
 
@@ -27,31 +27,28 @@ public class ConverterViewModel extends BaseViewModel {
         return converterStateLiveData;
     }
 
-    public void getCurrencyRate() {
-        isLoadingLiveData.postValue(true);
-        exchangerRateService.getPairConversation(currentState().getFromCurrency().getCode(), currentState().getToCurrency().getCode())
-                .enqueue(new Callback<PairConversation>() {
-                    @Override
-                    public void onResponse(@NonNull final Call<PairConversation> call, @NonNull final Response<PairConversation> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            final ConverterState resultState = new ConverterState.Builder(currentState())
-                                    .setCurrencyCourse(response.body().getConversionRate())
-                                    .copy();
+    public void getCurrencyRate(final boolean forceUpdate) {
+        isLoadingLiveData.setValue(true);
 
-                            converterStateLiveData.postValue(resultState);
-                            isErrorShownLiveData.postValue(false);
-                        } else {
-                            isErrorShownLiveData.postValue(true);
-                        }
-                        isLoadingLiveData.postValue(false);
-                    }
+        currencyCourseDataStore.getCurrencyResult(forceUpdate, new ResultCallback<CurrencyRate>() {
+            @Override
+            public void onSuccess(final CurrencyRate data) {
+                double currencyCourse = currenciesConverter.convert(currentState().getFromCurrency(), currentState().getToCurrency(), data);
+                final ConverterState resultState = new ConverterState.Builder(currentState())
+                        .setCurrencyCourse(currencyCourse)
+                        .copy();
 
-                    @Override
-                    public void onFailure(@NonNull final Call<PairConversation> call, @NonNull final Throwable error) {
-                        isLoadingLiveData.postValue(false);
-                        isErrorShownLiveData.postValue(true);
-                    }
-                });
+                converterStateLiveData.setValue(resultState);
+                isLoadingLiveData.setValue(false);
+                isErrorShownLiveData.setValue(false);
+            }
+
+            @Override
+            public void onFailure(final Throwable error) {
+                isLoadingLiveData.setValue(false);
+                isErrorShownLiveData.setValue(true);
+            }
+        });
     }
 
     public void setFromCurrency(final Currency currency) {
@@ -59,8 +56,8 @@ public class ConverterViewModel extends BaseViewModel {
                 .setFromCurrency(currency)
                 .copy();
 
-        converterStateLiveData.postValue(resultState);
-        getCurrencyRate();
+        converterStateLiveData.setValue(resultState);
+        getCurrencyRate(false);
     }
 
     public void setToCurrency(final Currency currency) {
@@ -68,13 +65,19 @@ public class ConverterViewModel extends BaseViewModel {
                 .setToCurrency(currency)
                 .copy();
 
-        converterStateLiveData.postValue(resultState);
-        getCurrencyRate();
+        converterStateLiveData.setValue(resultState);
+        getCurrencyRate(false);
     }
 
     public void swapCurrencies(final String fromCurrencyInput) {
         final ConverterState resultState;
-        if (currentState().getToCurrencyInput() == 0.0) {
+
+        if (currentState().getToCurrencyInput() == 0.0 && currentState().getFromCurrencyInput() == 0.0) {
+            resultState = new ConverterState.Builder(currentState())
+                    .setFromCurrency(currentState().getToCurrency())
+                    .setToCurrency(currentState().getFromCurrency())
+                    .copy();
+        } else if (currentState().getToCurrencyInput() == 0.0) {
             try {
                 final DecimalFormat decimalFormat = new DecimalFormat();
                 final double result = Objects.requireNonNull(decimalFormat.parse(fromCurrencyInput)).doubleValue();
@@ -86,7 +89,7 @@ public class ConverterViewModel extends BaseViewModel {
                         .setFromCurrencyInput(0.0)
                         .copy();
             } catch (ParseException e) {
-                isErrorShownLiveData.postValue(true);
+                isErrorShownLiveData.setValue(true);
                 return;
             }
         } else {
@@ -97,8 +100,8 @@ public class ConverterViewModel extends BaseViewModel {
                     .setFromCurrencyInput(currentState().getToCurrencyInput())
                     .copy();
         }
-        converterStateLiveData.postValue(resultState);
-        getCurrencyRate();
+        converterStateLiveData.setValue(resultState);
+        getCurrencyRate(false);
     }
 
     @NonNull
@@ -117,9 +120,9 @@ public class ConverterViewModel extends BaseViewModel {
                     .setToCurrencyInput(toCurrencyInput)
                     .copy();
 
-            converterStateLiveData.postValue(resultState);
+            converterStateLiveData.setValue(resultState);
         } catch (ParseException e) {
-            isErrorShownLiveData.postValue(true);
+            isErrorShownLiveData.setValue(true);
         }
     }
 }

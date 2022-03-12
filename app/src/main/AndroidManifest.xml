@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.practicum.currencyconverter">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -14,11 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YPracticumCurrencyConverter"
         tools:targetApi="31">
-        <activity
-            android:name=".presentation.exchangerate.ExchangeRateActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".presentation.currencies.CurrenciesActivity"
             android:exported="false"
@@ -36,7 +33,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

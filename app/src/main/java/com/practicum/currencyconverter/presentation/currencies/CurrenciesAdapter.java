@@ -61,8 +61,8 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdapter.Vi
         void bind(final Currency currency, final OnItemClickListener onItemClickListener) {
             itemView.setOnClickListener(v -> onItemClickListener.onItemClick(currency));
 
-            binding.iconImageView.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(), currency.getIcon()));
-            binding.nameTextView.setText(currency.getName());
+            binding.iconImageView.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(), currency.iconRes()));
+            binding.nameTextView.setText(currency.nameRes());
             binding.codeTextView.setText(currency.getCode());
         }
     }

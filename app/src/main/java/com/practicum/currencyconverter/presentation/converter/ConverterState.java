@@ -1,6 +1,10 @@
 package com.practicum.currencyconverter.presentation.converter;
 
 import com.practicum.currencyconverter.data.models.Currency;
+import com.practicum.currencyconverter.data.models.RUB;
+import com.practicum.currencyconverter.data.models.USD;
+
+import androidx.annotation.NonNull;
 
 public class ConverterState {
 
@@ -10,7 +14,7 @@ public class ConverterState {
     private final double fromCurrencyInput;
     private final double toCurrencyInput;
 
-    public static ConverterState DEFAULT = new ConverterState(Currency.USD, Currency.RUB, 0.0, 0.0, 0.0);
+    public static ConverterState DEFAULT = new ConverterState(new USD(), new RUB(), 0.0, 0.0, 0.0);
 
     public ConverterState(
             final Currency fromCurrency,
@@ -90,5 +94,17 @@ public class ConverterState {
         public ConverterState copy() {
             return new ConverterState(fromCurrency, toCurrency, currencyCourse, fromCurrencyInput, toCurrencyInput);
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "ConverterState{" +
+                "fromCurrency=" + fromCurrency +
+                ", toCurrency=" + toCurrency +
+                ", currencyCourse=" + currencyCourse +
+                ", fromCurrencyInput=" + fromCurrencyInput +
+                ", toCurrencyInput=" + toCurrencyInput +
+                '}';
     }
 }

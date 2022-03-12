@@ -1,55 +1,69 @@
 package com.practicum.currencyconverter.data.models;
 
-import com.practicum.currencyconverter.R;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
-public enum Currency {
-    AUD("AUD", R.string.currency_australia, R.drawable.ic_australia),
-    CAD("CAD", R.string.currency_canada, R.drawable.ic_canada),
-    CHF("CHF", R.string.currency_switzerland, R.drawable.ic_switzerland),
-    CNY("CNY", R.string.currency_china, R.drawable.ic_china),
-    CZK("CZK", R.string.currency_czech_republic, R.drawable.ic_czech_republic),
-    DKK("DKK", R.string.currency_denmark, R.drawable.ic_denmark),
-    EUR("EUR", R.string.currency_european_union, R.drawable.ic_euro),
-    GBP("GBP", R.string.currency_united_kingdom, R.drawable.ic_great_britain),
-    HKD("HKD", R.string.currency_hong_kong, R.drawable.ic_hong_kong),
-    JPY("JPY", R.string.currency_japan, R.drawable.ic_japan),
-    MXN("MXN", R.string.currency_mexico, R.drawable.ix_mexico),// none
-    NOK("NOK", R.string.currency_norway, R.drawable.ic_norway),
-    NZD("NZD", R.string.currency_new_zealand, R.drawable.ic_new_zeland), // none
-    PLN("PLN", R.string.currency_poland, R.drawable.ic_poland),
-    RUB("RUB", R.string.currency_russia, R.drawable.ic_russia),
-    SEK("SEK", R.string.currency_sweden, R.drawable.ic_sweden),
-    SGD("SGD", R.string.currency_singapore, R.drawable.ic_singapore),
-    TRY("TRY", R.string.currency_turkey, R.drawable.ic_turkey),
-    USD("USD", R.string.currency_united_states, R.drawable.ic_usa),
-    ZAR("ZAR", R.string.currency_south_africa, R.drawable.ic_south_africa);
-
-    private final String code;
+abstract public class Currency implements Serializable {
 
     @StringRes
-    private final int name;
+    public abstract int nameRes();
 
     @DrawableRes
-    private final int icon;
+    public abstract int iconRes();
 
-    Currency(final String code, @StringRes final int name, @DrawableRes final int icon) {
-        this.code = code;
-        this.name = name;
-        this.icon = icon;
+    public abstract String getCode();
+
+    @SerializedName("Value")
+    private double value;
+
+    @SerializedName("Previous")
+    private double previous;
+
+    @SerializedName("Nominal")
+    private int nominal;
+
+    public double getValue() {
+        return value;
     }
 
-    public String getCode() {
-        return code;
+    public double getPrevious() {
+        return previous;
     }
 
-    public int getName() {
-        return name;
+    public int getNominal() {
+        return nominal;
     }
 
-    public int getIcon() {
-        return icon;
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Currency currency = (Currency) o;
+        return Double.compare(currency.value, value) == 0 && Double.compare(currency.previous, previous) == 0 && nominal == currency.nominal &&
+                Objects.equals(getCode(), currency.getCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCode(), value, previous, nominal);
+    }
+
+    @Override
+    public String toString() {
+        return "Currency{" +
+                "code='" + getCode() + '\'' +
+                ", value=" + value +
+                ", previous=" + previous +
+                ", nominal=" + nominal +
+                '}';
     }
 }
