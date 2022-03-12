@@ -1,4 +1,4 @@
-package com.practicum.currencyconverter.ui;
+package com.practicum.currencyconverter.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;

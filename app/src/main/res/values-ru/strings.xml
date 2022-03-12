@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Currency Converter</string>
+    <string name="app_name">Конвертер валют</string>
+
+    <!-- Converter Screen -->
+    <string name="converter_convert_button_text">Сконвертировать</string>
+    <string name="converter_from_currency_icon_content_description">Иконка валюты из которой происходит конвертация</string>
+    <string name="converter_to_currency_icon_content_description">Иконка валюты в которую происходит конвертация</string>
+    <string name="converter_refresh_button_content_description">Сбросить введенные данные</string>
+    <string name="converter_swap_button_content_description">Поменять валюты местами</string>
+    <string name="converter_currency_cource_error">Ошибка загрузки курса валют</string>
+
+    <!-- Currencies Screen -->
     <string name="currencies_title">Выбор валюты</string>
+    <string name="currencies_icon_content_description">Иконка валюты</string>
+
+    <!-- Currencies -->
     <string name="currency_australia">Австралийский доллар</string>
     <string name="currency_canada">Канадски доллар</string>
     <string name="currency_switzerland">Швейцарский Франк</string>
@@ -22,11 +35,4 @@
     <string name="currency_turkey">Турецкая лира</string>
     <string name="currency_united_states">Доллар США</string>
     <string name="currency_south_africa">Ранд ЮАР</string>
-    <string name="converter_convert_button_text">Сконвертировать</string>
-    <string name="converter_from_currency_icon_content_description">Иконка валюты из которой происходит конвертация</string>
-    <string name="converter_to_currency_icon_content_description">Иконка валюты в которую происходит конвертация</string>
-    <string name="converter_refresh_button_content_description">Сбросить введенные данные</string>
-    <string name="converter_swap_button_content_description">Поменять валюты местами</string>
-    <string name="converter_currency_cource_error">Ошибка загрузки курса валют</string>
-    <string name="currencies_icon_content_description">Иконка валюты</string>
 </resources>

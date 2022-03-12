@@ -12,8 +12,8 @@
         android:id="@+id/convertButton"
         android:layout_width="0dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="6dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="6dp"
         android:background="@drawable/bg_blue_button"
         android:text="@string/converter_convert_button_text"
         android:textAppearance="@style/Text.Bold.16_20.White"
@@ -22,16 +22,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/refreshButton" />
 
-    <EditText
+    <com.practicum.currencyconverter.ui.views.AutoResizeEditText
         android:id="@+id/fromInputEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="14dp"
+        android:layout_marginEnd="16dp"
         android:background="@null"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="end"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
+        android:maxLength="19"
         android:maxLines="1"
         android:textAppearance="@style/Text.Regular.40"
         app:layout_constraintBottom_toBottomOf="@id/fromBackground"
@@ -44,8 +47,8 @@
         android:id="@+id/refreshButton"
         android:layout_width="84dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="34dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/bg_blue_button"
         android:contentDescription="@string/converter_refresh_button_content_description"
         android:src="@drawable/ic_refresh"
@@ -78,8 +81,11 @@
         android:id="@+id/toResultTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="14dp"
+        android:layout_marginEnd="16dp"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeTextType="uniform"
         android:gravity="end"
         android:maxLines="1"
         android:textAppearance="@style/Text.Regular.40"
@@ -184,7 +190,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fromBackground" />
 
-    <com.practicum.currencyconverter.ui.ToolDotProgress
+    <com.practicum.currencyconverter.ui.views.ToolDotProgress
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

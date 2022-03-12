@@ -2,8 +2,10 @@ package com.practicum.currencyconverter.presentation.converter;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -50,9 +52,9 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
     protected void showLoader(final boolean isLoading) {
         if (isLoading) {
             binding.progressBar.setVisibility(View.VISIBLE);
-            binding.currencyCourseTextView.setVisibility(View.GONE);
+            binding.currencyCourseTextView.setVisibility(View.INVISIBLE);
         } else {
-            binding.progressBar.setVisibility(View.GONE);
+            binding.progressBar.setVisibility(View.INVISIBLE);
             binding.currencyCourseTextView.setVisibility(View.VISIBLE);
         }
     }
@@ -84,17 +86,16 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         binding.fromInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-
+                // nothing to do
             }
 
             @Override
             public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
-
+                // nothing to do
             }
 
             @Override
             public void afterTextChanged(final Editable s) {
-                formatNumber(s, this);
                 setConvertButtonState(s);
             }
         });
@@ -189,20 +190,6 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
     private void clearFields() {
         binding.fromInputEditText.setText("");
         binding.toResultTextView.setText("");
-    }
-
-    private void formatNumber(final Editable s, final TextWatcher textWatcher) {
-        try {
-            final DecimalFormat decimalFormat = new DecimalFormat();
-            final double result = Objects.requireNonNull(decimalFormat.parse(s.toString())).doubleValue();
-            decimalFormat.setMaximumFractionDigits(2);
-
-            binding.fromInputEditText.removeTextChangedListener(textWatcher);
-            binding.fromInputEditText.setText(decimalFormat.format(result));
-            binding.fromInputEditText.addTextChangedListener(textWatcher);
-        } catch (ParseException e) {
-            // TODO show error
-        }
     }
 
     private void setConvertButtonState(final Editable s) {
