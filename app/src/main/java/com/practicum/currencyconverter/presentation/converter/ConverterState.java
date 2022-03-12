@@ -13,21 +13,25 @@ public class ConverterState {
     private final double currencyCourse;
     private final double fromCurrencyInput;
     private final double toCurrencyInput;
+    private final CourseChangeVo courseChangeVo;
 
-    public static ConverterState DEFAULT = new ConverterState(new USD(), new RUB(), 0.0, 0.0, 0.0);
+
+    public static ConverterState DEFAULT = new ConverterState(new USD(), new RUB(), 0.0, 0.0, 0.0, new CourseChangeVo(0.0, 0.0, true));
 
     public ConverterState(
             final Currency fromCurrency,
             final Currency toCurrency,
             final double currencyCourse,
             final double fromCurrencyInput,
-            final double toCurrencyInput
+            final double toCurrencyInput,
+            final CourseChangeVo courseChangeVo
     ) {
         this.fromCurrency = fromCurrency;
         this.toCurrency = toCurrency;
         this.currencyCourse = currencyCourse;
         this.fromCurrencyInput = fromCurrencyInput;
         this.toCurrencyInput = toCurrencyInput;
+        this.courseChangeVo = courseChangeVo;
     }
 
     public Currency getFromCurrency() {
@@ -50,6 +54,10 @@ public class ConverterState {
         return toCurrencyInput;
     }
 
+    public CourseChangeVo getCourseChangeVo() {
+        return courseChangeVo;
+    }
+
     static class Builder {
 
         private Currency fromCurrency;
@@ -57,6 +65,7 @@ public class ConverterState {
         private double currencyCourse;
         private double fromCurrencyInput;
         private double toCurrencyInput;
+        private CourseChangeVo courseChangeVo;
 
         public Builder(final ConverterState state) {
             this.fromCurrency = state.fromCurrency;
@@ -64,6 +73,7 @@ public class ConverterState {
             this.currencyCourse = state.currencyCourse;
             this.fromCurrencyInput = state.fromCurrencyInput;
             this.toCurrencyInput = state.toCurrencyInput;
+            this.courseChangeVo = state.courseChangeVo;
         }
 
         public Builder setFromCurrency(final Currency fromCurrency) {
@@ -91,8 +101,13 @@ public class ConverterState {
             return this;
         }
 
+        public Builder setCourseChangeVo(final CourseChangeVo courseChangeVo) {
+            this.courseChangeVo = courseChangeVo;
+            return this;
+        }
+
         public ConverterState copy() {
-            return new ConverterState(fromCurrency, toCurrency, currencyCourse, fromCurrencyInput, toCurrencyInput);
+            return new ConverterState(fromCurrency, toCurrency, currencyCourse, fromCurrencyInput, toCurrencyInput, courseChangeVo);
         }
     }
 

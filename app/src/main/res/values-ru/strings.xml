@@ -9,6 +9,7 @@
     <string name="converter_refresh_button_content_description">Сбросить введенные данные</string>
     <string name="converter_swap_button_content_description">Поменять валюты местами</string>
     <string name="converter_currency_cource_error">Ошибка загрузки курса валют</string>
+    <string name="converter_course_change">%1$s%2$.2f (%3$.2f) за сегодня</string>
 
     <!-- Currencies Screen -->
     <string name="currencies_title">Выбор валюты</string>

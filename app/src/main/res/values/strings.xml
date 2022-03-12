@@ -9,6 +9,7 @@
     <string name="converter_swap_button_content_description">Swap currencies</string>
     <string name="converter_currency_cource" translatable="false">1 %1$s = %2$f %3$s</string>
     <string name="converter_currency_cource_error">Currency data loading error</string>
+    <string name="converter_course_change">%1$s%2$.2f (%3$.2f) today</string>
 
     <!-- Currencies Screen -->
     <string name="currencies_title">Currency selection</string>

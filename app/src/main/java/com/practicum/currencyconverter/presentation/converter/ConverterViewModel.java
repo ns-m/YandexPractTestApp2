@@ -20,6 +20,7 @@ public class ConverterViewModel extends BaseViewModel {
 
     private final CurrencyCourseDataStore currencyCourseDataStore = DI.currencyCourseDataStore();
     private final CurrenciesConverter currenciesConverter = DI.currenciesConverter();
+    private final CourseChangeMapper courseChangeMapper = DI.courseChangeMapper();
 
     private final MutableLiveData<ConverterState> converterStateLiveData = new MutableLiveData<>(ConverterState.DEFAULT);
 
@@ -33,9 +34,12 @@ public class ConverterViewModel extends BaseViewModel {
         currencyCourseDataStore.getCurrencyResult(forceUpdate, new ResultCallback<CurrencyRate>() {
             @Override
             public void onSuccess(final CurrencyRate data) {
-                double currencyCourse = currenciesConverter.convert(currentState().getFromCurrency(), currentState().getToCurrency(), data);
+                final double currencyCourse = currenciesConverter.calculateCurrent(currentState().getFromCurrency(), currentState().getToCurrency(), data);
+                final double previousCourse = currenciesConverter.calculatePrevious(currentState().getFromCurrency(), currentState().getToCurrency(), data);
+
                 final ConverterState resultState = new ConverterState.Builder(currentState())
                         .setCurrencyCourse(currencyCourse)
+                        .setCourseChangeVo(courseChangeMapper.map(currencyCourse, previousCourse))
                         .copy();
 
                 converterStateLiveData.setValue(resultState);

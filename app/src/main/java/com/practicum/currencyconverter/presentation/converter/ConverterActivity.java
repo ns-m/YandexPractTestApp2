@@ -3,8 +3,10 @@ package com.practicum.currencyconverter.presentation.converter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.text.style.ForegroundColorSpan;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -50,9 +52,11 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (isLoading) {
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.currencyCourseTextView.setVisibility(View.INVISIBLE);
+            binding.currencyChangeTextView.setVisibility(View.INVISIBLE);
         } else {
             binding.progressBar.setVisibility(View.INVISIBLE);
             binding.currencyCourseTextView.setVisibility(View.VISIBLE);
+            binding.currencyChangeTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -108,6 +112,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         setCurrencyCourse(state);
         setFromCurrencyInput(state);
         setToCurrencyInput(state);
+        setCourseDifference(state.getCourseChangeVo());
     }
 
     private void openKeyBoard() {
@@ -182,6 +187,18 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
             decimalFormat.setMaximumFractionDigits(2);
             binding.toResultTextView.setText(decimalFormat.format(toCurrencyInput));
         }
+    }
+
+    private void setCourseDifference(final CourseChangeVo courseChangeVo) {
+        final char sign = courseChangeVo.isPositive() ? '+' : '-';
+        final String text = getString(R.string.converter_course_change, sign, courseChangeVo.getDifferenceValue(), courseChangeVo.getDifferencePercent());
+
+        final int color = courseChangeVo.isPositive() ? ContextCompat.getColor(this, R.color.green) : ContextCompat.getColor(this, R.color.red);
+        final SpannableString spannable = new SpannableString(text);
+        final int end = text.indexOf(')') + 1;
+        spannable.setSpan(new ForegroundColorSpan(color), 0, end, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+
+        binding.currencyChangeTextView.setText(spannable);
     }
 
     private void clearFields() {

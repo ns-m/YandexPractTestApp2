@@ -5,6 +5,7 @@ import com.practicum.currencyconverter.data.cache.CurrencyCourseDataStore;
 import com.practicum.currencyconverter.data.network.ApiProvider;
 import com.practicum.currencyconverter.data.network.ExchangerRateService;
 import com.practicum.currencyconverter.data.network.ExchangerRateUrlProvider;
+import com.practicum.currencyconverter.presentation.converter.CourseChangeMapper;
 
 public class DI {
 
@@ -29,6 +30,10 @@ public class DI {
 
     public static CurrenciesConverter currenciesConverter(){
         return new CurrenciesConverter();
+    }
+
+    public static CourseChangeMapper courseChangeMapper(){
+        return new CourseChangeMapper();
     }
 
     private static ExchangerRateService createExchangerRateService() {
