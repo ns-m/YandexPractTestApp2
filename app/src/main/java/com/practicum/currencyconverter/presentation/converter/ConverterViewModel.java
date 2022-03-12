@@ -72,14 +72,31 @@ public class ConverterViewModel extends BaseViewModel {
         getCurrencyRate();
     }
 
-    public void swapCurrencies() {
-        final ConverterState resultState = new ConverterState.Builder(currentState())
-                .setFromCurrency(currentState().getToCurrency())
-                .setToCurrency(currentState().getFromCurrency())
-                .setToCurrencyInput(currentState().getFromCurrencyInput())
-                .setFromCurrencyInput(currentState().getToCurrencyInput())
-                .copy();
+    public void swapCurrencies(final String fromCurrencyInput) {
+        final ConverterState resultState;
+        if (currentState().getToCurrencyInput() == 0.0) {
+            try {
+                final DecimalFormat decimalFormat = new DecimalFormat();
+                final double result = Objects.requireNonNull(decimalFormat.parse(fromCurrencyInput)).doubleValue();
 
+                resultState = new ConverterState.Builder(currentState())
+                        .setFromCurrency(currentState().getToCurrency())
+                        .setToCurrency(currentState().getFromCurrency())
+                        .setToCurrencyInput(result)
+                        .setFromCurrencyInput(0.0)
+                        .copy();
+            } catch (ParseException e) {
+                isErrorShownLiveData.postValue(true);
+                return;
+            }
+        } else {
+            resultState = new ConverterState.Builder(currentState())
+                    .setFromCurrency(currentState().getToCurrency())
+                    .setToCurrency(currentState().getFromCurrency())
+                    .setToCurrencyInput(currentState().getFromCurrencyInput())
+                    .setFromCurrencyInput(currentState().getToCurrencyInput())
+                    .copy();
+        }
         converterStateLiveData.postValue(resultState);
         getCurrencyRate();
     }
@@ -90,8 +107,8 @@ public class ConverterViewModel extends BaseViewModel {
     }
 
     public void convertUserInput(final String fromCurrencyInput) {
-        final DecimalFormat decimalFormat = new DecimalFormat();
         try {
+            final DecimalFormat decimalFormat = new DecimalFormat();
             final double result = Objects.requireNonNull(decimalFormat.parse(fromCurrencyInput)).doubleValue();
             final double toCurrencyInput = result * currentState().getCurrencyCourse();
 
@@ -102,8 +119,7 @@ public class ConverterViewModel extends BaseViewModel {
 
             converterStateLiveData.postValue(resultState);
         } catch (ParseException e) {
-            // TODO handle error
+            isErrorShownLiveData.postValue(true);
         }
-
     }
 }

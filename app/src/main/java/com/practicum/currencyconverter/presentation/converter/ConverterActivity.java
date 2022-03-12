@@ -2,10 +2,8 @@ package com.practicum.currencyconverter.presentation.converter;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,8 +15,6 @@ import com.practicum.currencyconverter.presentation.base.BaseActivity;
 import com.practicum.currencyconverter.presentation.currencies.CurrenciesActivity;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.util.Objects;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.core.content.ContextCompat;
@@ -78,8 +74,8 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         binding.fromCurrencyIconImageView.setOnClickListener(v -> openCurrencies(CurrencyInput.FROM));
         binding.toCurrencyIconImageView.setOnClickListener(v -> openCurrencies(CurrencyInput.TO));
         binding.refreshButton.setOnClickListener(v -> clearFields());
-        binding.convertButton.setOnClickListener(v -> viewModel.convertUserInput(binding.fromInputEditText.getText().toString()));
-        binding.swapFab.setOnClickListener(v -> viewModel.swapCurrencies());
+        binding.convertButton.setOnClickListener(v -> convertUserInput());
+        binding.swapFab.setOnClickListener(v -> swapCurrencies());
     }
 
     private void setFromInput() {
@@ -190,6 +186,20 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
     private void clearFields() {
         binding.fromInputEditText.setText("");
         binding.toResultTextView.setText("");
+    }
+
+    private void convertUserInput() {
+        final Editable from = binding.fromInputEditText.getText();
+        if (from != null) {
+            viewModel.convertUserInput(from.toString());
+        }
+    }
+
+    private void swapCurrencies() {
+        final Editable from = binding.fromInputEditText.getText();
+        if (from != null) {
+            viewModel.swapCurrencies(from.toString());
+        }
     }
 
     private void setConvertButtonState(final Editable s) {
