@@ -2,9 +2,11 @@ package com.practicum.currencyconverter.presentation.currencies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.practicum.currencyconverter.R;
 import com.practicum.currencyconverter.data.models.Currency;
@@ -17,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 public class CurrenciesActivity extends BaseActivity<CurrenciesViewModel> implements CurrenciesAdapter.OnItemClickListener {
@@ -92,6 +95,7 @@ public class CurrenciesActivity extends BaseActivity<CurrenciesViewModel> implem
 
     private void initViews() {
         initToolbar();
+        initSearchView();
         initRecycler();
     }
 
@@ -104,6 +108,26 @@ public class CurrenciesActivity extends BaseActivity<CurrenciesViewModel> implem
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         }
+    }
+
+    private void initSearchView() {
+        final EditText editText = binding.searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        editText.setTextAppearance(R.style.Text_Bold_16_20_Black);
+
+        binding.searchView.setOnClickListener(v -> binding.searchView.setIconified(false));
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                viewModel.search(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(final String newText) {
+                viewModel.search(newText);
+                return true;
+            }
+        });
     }
 
     private void initRecycler() {

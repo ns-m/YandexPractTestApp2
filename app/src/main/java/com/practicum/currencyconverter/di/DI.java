@@ -1,5 +1,7 @@
 package com.practicum.currencyconverter.di;
 
+import com.practicum.currencyconverter.app.App;
+import com.practicum.currencyconverter.app.ResourceProvider;
 import com.practicum.currencyconverter.data.CurrenciesConverter;
 import com.practicum.currencyconverter.data.cache.CurrencyCourseDataStore;
 import com.practicum.currencyconverter.data.network.ApiProvider;
@@ -28,12 +30,16 @@ public class DI {
         return currencyCourseDataStore;
     }
 
-    public static CurrenciesConverter currenciesConverter(){
+    public static CurrenciesConverter currenciesConverter() {
         return new CurrenciesConverter();
     }
 
-    public static CourseChangeMapper courseChangeMapper(){
+    public static CourseChangeMapper courseChangeMapper() {
         return new CourseChangeMapper();
+    }
+
+    public static ResourceProvider resourceProvider() {
+        return new ResourceProvider(App.getAppContext());
     }
 
     private static ExchangerRateService createExchangerRateService() {
