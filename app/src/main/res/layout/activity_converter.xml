@@ -18,6 +18,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="end"
+        android:textDirection="ltr"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
         android:maxLength="19"

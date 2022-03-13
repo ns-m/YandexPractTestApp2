@@ -8,8 +8,6 @@ import com.practicum.currencyconverter.data.network.ResultCallback;
 import com.practicum.currencyconverter.di.DI;
 import com.practicum.currencyconverter.presentation.base.BaseViewModel;
 
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -56,8 +54,13 @@ public class ConverterViewModel extends BaseViewModel {
     }
 
     public void setFromCurrency(final Currency currency) {
+        if (currency.getClass().equals(currentState().getFromCurrency().getClass())) {
+            return;
+        }
         final ConverterState resultState = new ConverterState.Builder(currentState())
                 .setFromCurrency(currency)
+                .setToCurrencyInput(0.0)
+                .setFromCurrencyInput(0.0)
                 .copy();
 
         converterStateLiveData.setValue(resultState);
@@ -65,8 +68,13 @@ public class ConverterViewModel extends BaseViewModel {
     }
 
     public void setToCurrency(final Currency currency) {
+        if (currency.getClass().equals(currentState().getToCurrency().getClass())) {
+            return;
+        }
         final ConverterState resultState = new ConverterState.Builder(currentState())
                 .setToCurrency(currency)
+                .setToCurrencyInput(0.0)
+                .setFromCurrencyInput(0.0)
                 .copy();
 
         converterStateLiveData.setValue(resultState);
@@ -82,20 +90,12 @@ public class ConverterViewModel extends BaseViewModel {
                     .setToCurrency(currentState().getFromCurrency())
                     .copy();
         } else if (currentState().getToCurrencyInput() == 0.0) {
-            try {
-                final DecimalFormat decimalFormat = new DecimalFormat();
-                final double result = Objects.requireNonNull(decimalFormat.parse(fromCurrencyInput)).doubleValue();
-
-                resultState = new ConverterState.Builder(currentState())
-                        .setFromCurrency(currentState().getToCurrency())
-                        .setToCurrency(currentState().getFromCurrency())
-                        .setToCurrencyInput(result)
-                        .setFromCurrencyInput(0.0)
-                        .copy();
-            } catch (ParseException e) {
-                isErrorShownLiveData.setValue(true);
-                return;
-            }
+            resultState = new ConverterState.Builder(currentState())
+                    .setFromCurrency(currentState().getToCurrency())
+                    .setToCurrency(currentState().getFromCurrency())
+                    .setToCurrencyInput(Double.parseDouble(fromCurrencyInput))
+                    .setFromCurrencyInput(0.0)
+                    .copy();
         } else {
             resultState = new ConverterState.Builder(currentState())
                     .setFromCurrency(currentState().getToCurrency())
@@ -114,19 +114,14 @@ public class ConverterViewModel extends BaseViewModel {
     }
 
     public void convertUserInput(final String fromCurrencyInput) {
-        try {
-            final DecimalFormat decimalFormat = new DecimalFormat();
-            final double result = Objects.requireNonNull(decimalFormat.parse(fromCurrencyInput)).doubleValue();
-            final double toCurrencyInput = result * currentState().getCurrencyCourse();
+        final double result = Double.parseDouble(fromCurrencyInput);
+        final double toCurrencyInput = result * currentState().getCurrencyCourse();
 
-            final ConverterState resultState = new ConverterState.Builder(currentState())
-                    .setFromCurrencyInput(result)
-                    .setToCurrencyInput(toCurrencyInput)
-                    .copy();
+        final ConverterState resultState = new ConverterState.Builder(currentState())
+                .setFromCurrencyInput(result)
+                .setToCurrencyInput(toCurrencyInput)
+                .copy();
 
-            converterStateLiveData.setValue(resultState);
-        } catch (ParseException e) {
-            isErrorShownLiveData.setValue(true);
-        }
+        converterStateLiveData.setValue(resultState);
     }
 }

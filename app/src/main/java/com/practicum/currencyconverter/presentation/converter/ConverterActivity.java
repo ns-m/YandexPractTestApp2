@@ -17,9 +17,10 @@ import com.practicum.currencyconverter.databinding.ActivityConverterBinding;
 import com.practicum.currencyconverter.presentation.base.BaseActivity;
 import com.practicum.currencyconverter.presentation.currencies.CurrenciesActivity;
 
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -124,7 +125,11 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         currencyScreenLauncher.launch(currencyInput);
     }
 
-    private void handleCurrencyResult(final Pair<Currency, CurrencyInput> currencyResult) {
+    private void handleCurrencyResult(@Nullable final Pair<Currency, CurrencyInput> currencyResult) {
+        if (currencyResult == null) {
+            return;
+        }
+
         final CurrencyInput currencyInput = currencyResult.second;
         final Currency currency = currencyResult.first;
 
@@ -171,9 +176,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (fromCurrencyInput == 0.0) {
             binding.fromInputEditText.setText("");
         } else {
-            final DecimalFormat decimalFormat = new DecimalFormat();
-            decimalFormat.setMaximumFractionDigits(2);
-            binding.fromInputEditText.setText(decimalFormat.format(fromCurrencyInput));
+            binding.fromInputEditText.setText(String.valueOf(fromCurrencyInput));
         }
     }
 
@@ -183,9 +186,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (toCurrencyInput == 0.0) {
             binding.toResultTextView.setText("");
         } else {
-            final DecimalFormat decimalFormat = new DecimalFormat();
-            decimalFormat.setMaximumFractionDigits(2);
-            binding.toResultTextView.setText(decimalFormat.format(toCurrencyInput));
+            binding.toResultTextView.setText(String.valueOf(toCurrencyInput));
         }
     }
 

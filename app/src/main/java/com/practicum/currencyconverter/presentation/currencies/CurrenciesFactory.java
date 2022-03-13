@@ -2,6 +2,7 @@ package com.practicum.currencyconverter.presentation.currencies;
 
 import com.practicum.currencyconverter.data.models.Currency;
 import com.practicum.currencyconverter.data.models.CurrencyRate;
+import com.practicum.currencyconverter.data.models.RUB;
 import com.practicum.currencyconverter.data.models.Valute;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class CurrenciesFactory {
         final List<Currency> currencies = new ArrayList<>();
         final Valute valute = data.getValute();
 
+        currencies.add(new RUB());
         addIfNotNull(valute.AUD(), currencies);
         addIfNotNull(valute.CAD(), currencies);
         addIfNotNull(valute.CHF(), currencies);
