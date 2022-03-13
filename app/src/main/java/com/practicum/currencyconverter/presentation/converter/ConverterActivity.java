@@ -17,8 +17,6 @@ import com.practicum.currencyconverter.databinding.ActivityConverterBinding;
 import com.practicum.currencyconverter.presentation.base.BaseActivity;
 import com.practicum.currencyconverter.presentation.currencies.CurrenciesActivity;
 
-import java.text.NumberFormat;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -157,8 +155,9 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (state.getCurrencyCourse() != 0.0) {
             final String currencyCourseText = getString(
                     R.string.converter_currency_cource,
+                    state.getFromCurrency().getNominal(),
                     state.getFromCurrency().getCode(),
-                    state.getCurrencyCourse(),
+                    state.getCurrencyCourse() * state.getFromCurrency().getNominal(),
                     state.getToCurrency().getCode()
             );
 
@@ -176,7 +175,9 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (fromCurrencyInput == 0.0) {
             binding.fromInputEditText.setText("");
         } else {
-            binding.fromInputEditText.setText(String.valueOf(fromCurrencyInput));
+            final String result = String.valueOf(fromCurrencyInput);
+            binding.fromInputEditText.setText(result);
+            binding.fromInputEditText.setSelection(result.length());
         }
     }
 

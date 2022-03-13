@@ -7,7 +7,7 @@
     <string name="converter_to_currency_icon_content_description">To Currency Icon</string>
     <string name="converter_refresh_button_content_description">Refresh entered data</string>
     <string name="converter_swap_button_content_description">Swap currencies</string>
-    <string name="converter_currency_cource" translatable="false">1 %1$s = %2$f %3$s</string>
+    <string name="converter_currency_cource" translatable="false">%1$d %2$s = %3$f %4$s</string>
     <string name="converter_currency_cource_error">Currency data loading error</string>
     <string name="converter_course_change">%1$s%2$.2f (%3$.2f) today</string>
 

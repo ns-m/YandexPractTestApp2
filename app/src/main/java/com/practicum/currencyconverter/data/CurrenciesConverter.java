@@ -28,9 +28,9 @@ public class CurrenciesConverter {
         if (from.getClass().equals(to.getClass())) {
             return 1;
         } else if (from instanceof RUB) {
-            return toResult.getPrevious() * fromResult.getNominal();
+            return fromResult.getNominal() / toResult.getPrevious();
         } else if (to instanceof RUB) {
-            return toResult.getNominal() / fromResult.getPrevious();
+            return fromResult.getPrevious() / toResult.getNominal();
         } else {
             return fromResult.getPrevious() * fromResult.getNominal() / toResult.getPrevious() * toResult.getNominal();
         }

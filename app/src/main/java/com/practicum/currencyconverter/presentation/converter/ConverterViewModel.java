@@ -1,5 +1,6 @@
 package com.practicum.currencyconverter.presentation.converter;
 
+import com.practicum.currencyconverter.data.Currencies;
 import com.practicum.currencyconverter.data.CurrenciesConverter;
 import com.practicum.currencyconverter.data.cache.CurrencyCourseDataStore;
 import com.practicum.currencyconverter.data.models.Currency;
@@ -35,7 +36,12 @@ public class ConverterViewModel extends BaseViewModel {
                 final double currencyCourse = currenciesConverter.calculateCurrent(currentState().getFromCurrency(), currentState().getToCurrency(), data);
                 final double previousCourse = currenciesConverter.calculatePrevious(currentState().getFromCurrency(), currentState().getToCurrency(), data);
 
+                final Currency toCurrency = Currencies.getByClass(currentState().getToCurrency(), data);
+                final Currency fromCurrency = Currencies.getByClass(currentState().getFromCurrency(), data);
+
                 final ConverterState resultState = new ConverterState.Builder(currentState())
+                        .setToCurrency(toCurrency)
+                        .setFromCurrency(fromCurrency)
                         .setCurrencyCourse(currencyCourse)
                         .setCourseChangeVo(courseChangeMapper.map(currencyCourse, previousCourse))
                         .copy();
