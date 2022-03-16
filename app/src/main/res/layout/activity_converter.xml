@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/currencyCourseTextView" />
 
-    <ImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/toCurrencyIconImageView"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -50,19 +50,23 @@
         android:layout_marginTop="12dp"
         android:contentDescription="@string/converter_to_currency_icon_content_description"
         android:src="@drawable/ic_russia"
+        app:fabCustomSize="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toBackground" />
+        app:layout_constraintTop_toTopOf="@id/toBackground"
+        app:maxImageSize="48dp" />
 
-    <ImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fromCurrencyIconImageView"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:contentDescription="@string/converter_from_currency_icon_content_description"
         android:src="@drawable/ic_usa"
+        app:fabCustomSize="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/fromBackground" />
+        app:layout_constraintTop_toTopOf="@id/fromBackground"
+        app:maxImageSize="48dp" />
 
     <TextView
         android:id="@+id/toResultTextView"

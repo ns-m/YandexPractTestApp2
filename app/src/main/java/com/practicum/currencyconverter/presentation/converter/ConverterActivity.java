@@ -16,6 +16,7 @@ import com.practicum.currencyconverter.data.models.Currency;
 import com.practicum.currencyconverter.databinding.ActivityConverterBinding;
 import com.practicum.currencyconverter.presentation.base.BaseActivity;
 import com.practicum.currencyconverter.presentation.currencies.CurrenciesActivity;
+import com.practicum.currencyconverter.ui.strings.NumberFormatter;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
@@ -175,7 +176,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (fromCurrencyInput == 0.0) {
             binding.fromInputEditText.setText("");
         } else {
-            final String result = String.valueOf(fromCurrencyInput);
+            final String result = NumberFormatter.toString2Digit(fromCurrencyInput);
             binding.fromInputEditText.setText(result);
             binding.fromInputEditText.setSelection(result.length());
         }
@@ -187,7 +188,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (toCurrencyInput == 0.0) {
             binding.toResultTextView.setText("");
         } else {
-            binding.toResultTextView.setText(String.valueOf(toCurrencyInput));
+            binding.toResultTextView.setText(NumberFormatter.toString2Digit(toCurrencyInput));
         }
     }
 
