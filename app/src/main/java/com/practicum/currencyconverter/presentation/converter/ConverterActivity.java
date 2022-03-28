@@ -54,9 +54,8 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
             binding.currencyCourseTextView.setVisibility(View.INVISIBLE);
             binding.currencyChangeTextView.setVisibility(View.INVISIBLE);
         } else {
-            binding.progressBar.setVisibility(View.INVISIBLE);
-            binding.currencyCourseTextView.setVisibility(View.VISIBLE);
-            binding.currencyChangeTextView.setVisibility(View.VISIBLE);
+            // кажется, злые тролли сломали наше приложение ༼ つ ◕_◕ ༽つ
+            // нам срочно нужно написать здесь код, чтоб спасти пользователей от вечной загрузки и испорченных нервов
         }
     }
 
@@ -97,7 +96,9 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
 
             @Override
             public void afterTextChanged(final Editable s) {
-                setConvertButtonState(s);
+                final boolean needShowConvertButton = s.length() > 0;
+
+                // кажется, здесь тоже не хватает чего-то (°ロ°)
             }
         });
     }
@@ -162,10 +163,8 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
                     state.getToCurrency().getCode()
             );
 
-            binding.currencyCourseTextView.setVisibility(View.VISIBLE);
             binding.currencyCourseTextView.setText(currencyCourseText);
         } else {
-            binding.currencyCourseTextView.setVisibility(View.GONE);
             binding.currencyCourseTextView.setText("");
         }
     }
@@ -212,7 +211,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
     private void convertUserInput() {
         final Editable from = binding.fromInputEditText.getText();
         if (from != null) {
-            viewModel.convertUserInput(from.toString());
+            viewModel.convertUserInput(Double.parseDouble(from.toString()));
         }
     }
 
@@ -221,9 +220,5 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
         if (from != null) {
             viewModel.swapCurrencies(from.toString());
         }
-    }
-
-    private void setConvertButtonState(final Editable s) {
-        binding.convertButton.setEnabled(s.length() > 0);
     }
 }

@@ -1,5 +1,7 @@
 package com.practicum.currencyconverter.presentation.converter;
 
+import android.os.Handler;
+
 import com.practicum.currencyconverter.data.Currencies;
 import com.practicum.currencyconverter.data.CurrenciesConverter;
 import com.practicum.currencyconverter.data.cache.CurrencyCourseDataStore;
@@ -29,7 +31,10 @@ public class ConverterViewModel extends BaseViewModel {
 
     public void getCurrencyRate(final boolean forceUpdate) {
         isLoadingLiveData.setValue(true);
+        new Handler().postDelayed(() -> loadCurrencyRateFromNetwork(forceUpdate), 2000);
+    }
 
+    private void loadCurrencyRateFromNetwork(final boolean forceUpdate) {
         currencyCourseDataStore.getCurrencyResult(forceUpdate, new ResultCallback<CurrencyRate>() {
             @Override
             public void onSuccess(final CurrencyRate data) {
@@ -119,10 +124,21 @@ public class ConverterViewModel extends BaseViewModel {
         return Objects.requireNonNull(converterStateLiveData.getValue());
     }
 
-    public void convertUserInput(final String fromCurrencyInput) {
-        final double result = Double.parseDouble(fromCurrencyInput);
-        final double toCurrencyInput = result * currentState().getCurrencyCourse();
+    public void convertUserInput(final double fromCurrencyInput) {
+        final double toCurrencyInput = 0; // вам не кажется, что здесь не должно быть 0?
 
+        // кажется, это последняя пакость наших троллей ¯\_(ツ)_/¯
+        // давайте же наконец сделаем наше приложение полезным для любимых пользователей
+        // метод getCurrencyCourse() может нам помочь получить актуальный курс валют
+
+         showActualCourse(fromCurrencyInput, toCurrencyInput);
+    }
+
+    private double getCurrencyCourse() {
+        return currentState().getCurrencyCourse();
+    }
+
+    private void showActualCourse(final double result, final double toCurrencyInput) {
         final ConverterState resultState = new ConverterState.Builder(currentState())
                 .setFromCurrencyInput(result)
                 .setToCurrencyInput(toCurrencyInput)

@@ -8,72 +8,39 @@
     tools:context=".presentation.converter.ConverterActivity"
     tools:ignore="LabelFor">
 
-    <com.practicum.currencyconverter.ui.views.AutoResizeEditText
-        android:id="@+id/fromInputEditText"
+    <Button
+        android:id="@+id/convertButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="16dp"
-        android:background="@null"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="end"
-        android:importantForAutofill="no"
-        android:inputType="numberDecimal"
-        android:maxLength="19"
-        android:maxLines="1"
-        android:textAppearance="@style/Text.Regular.40"
-        android:textDirection="ltr"
-        app:layout_constraintBottom_toBottomOf="@id/fromBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/fromCurrencyIconImageView"
-        app:layout_constraintTop_toTopOf="@id/fromBackground"
-        tools:text="1" />
+        android:layout_height="44dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_blue_button"
+        android:enabled="false"
+        android:text="@string/converter_convert_button_text"
+        android:textAppearance="@style/Text.Bold.16_20.White"
+        app:layout_constraintBottom_toBottomOf="@id/refreshButton"
+        app:layout_constraintEnd_toStartOf="@id/refreshButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/refreshButton" />
 
     <ImageButton
         android:id="@+id/refreshButton"
         android:layout_width="84dp"
         android:layout_height="44dp"
-        android:layout_marginTop="34dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="34dp"
         android:background="@drawable/bg_blue_button"
         android:contentDescription="@string/converter_refresh_button_content_description"
         android:src="@drawable/ic_refresh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/currencyCourseTextView" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/toCurrencyIconImageView"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@string/converter_to_currency_icon_content_description"
-        android:src="@drawable/ic_russia"
-        app:fabCustomSize="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/toBackground"
-        app:maxImageSize="48dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fromCurrencyIconImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@string/converter_from_currency_icon_content_description"
-        android:src="@drawable/ic_usa"
-        app:fabCustomSize="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/fromBackground"
-        app:maxImageSize="48dp" />
-
     <TextView
         android:id="@+id/toResultTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="14dp"
         android:autoSizeMaxTextSize="40sp"
         android:autoSizeMinTextSize="20sp"
         android:autoSizeTextType="uniform"
@@ -168,6 +135,32 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/toCurrencyIconImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/converter_to_currency_icon_content_description"
+        android:src="@drawable/ic_russia"
+        app:fabCustomSize="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toBackground"
+        app:maxImageSize="48dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fromCurrencyIconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/converter_from_currency_icon_content_description"
+        android:src="@drawable/ic_usa"
+        app:fabCustomSize="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fromBackground"
+        app:maxImageSize="48dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/swapFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -180,6 +173,28 @@
         app:layout_constraintBottom_toTopOf="@id/toBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fromBackground" />
+
+    <com.practicum.currencyconverter.ui.views.AutoResizeEditText
+        android:id="@+id/fromInputEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="14dp"
+        android:background="@null"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="end"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:maxLength="19"
+        android:maxLines="1"
+        android:textAppearance="@style/Text.Regular.40"
+        android:textDirection="ltr"
+        app:layout_constraintBottom_toBottomOf="@id/fromBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fromCurrencyIconImageView"
+        app:layout_constraintTop_toTopOf="@id/fromBackground"
+        tools:text="1" />
 
     <com.practicum.currencyconverter.ui.views.ToolDotProgress
         android:id="@+id/progressBar"
@@ -195,19 +210,5 @@
         app:layout_constraintStart_toStartOf="@+id/currencyCourseTextView"
         app:layout_constraintTop_toTopOf="@id/currencyCourseTextView"
         app:smallDotRadius="4" />
-
-    <Button
-        android:id="@+id/convertButton"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="6dp"
-        android:background="@drawable/bg_blue_button"
-        android:text="@string/converter_convert_button_text"
-        android:textAppearance="@style/Text.Bold.16_20.White"
-        app:layout_constraintBottom_toBottomOf="@id/refreshButton"
-        app:layout_constraintEnd_toStartOf="@id/refreshButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/refreshButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
