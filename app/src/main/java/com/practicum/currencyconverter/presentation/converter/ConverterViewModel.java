@@ -31,10 +31,7 @@ public class ConverterViewModel extends BaseViewModel {
 
     public void getCurrencyRate(final boolean forceUpdate) {
         isLoadingLiveData.setValue(true);
-        new Handler().postDelayed(() -> loadCurrencyRateFromNetwork(forceUpdate), 2000);
-    }
 
-    private void loadCurrencyRateFromNetwork(final boolean forceUpdate) {
         currencyCourseDataStore.getCurrencyResult(forceUpdate, new ResultCallback<CurrencyRate>() {
             @Override
             public void onSuccess(final CurrencyRate data) {
