@@ -1,7 +1,5 @@
 package com.practicum.currencyconverter.presentation.converter;
 
-import android.os.Handler;
-
 import com.practicum.currencyconverter.data.Currencies;
 import com.practicum.currencyconverter.data.CurrenciesConverter;
 import com.practicum.currencyconverter.data.cache.CurrencyCourseDataStore;
@@ -126,16 +124,16 @@ public class ConverterViewModel extends BaseViewModel {
 
         // кажется, это последняя пакость наших троллей ¯\_(ツ)_/¯
         // давайте же наконец сделаем наше приложение полезным для любимых пользователей
-        // метод getCurrencyCourse() может нам помочь получить актуальный курс валют
+        // метод showActualRate() может нам помочь получить актуальный курс валют
 
-         showActualCourse(fromCurrencyInput, toCurrencyInput);
+         showActualRate(fromCurrencyInput, toCurrencyInput);
     }
 
     private double getCurrencyCourse() {
         return currentState().getCurrencyCourse();
     }
 
-    private void showActualCourse(final double result, final double toCurrencyInput) {
+    private void showActualRate(final double result, final double toCurrencyInput) {
         final ConverterState resultState = new ConverterState.Builder(currentState())
                 .setFromCurrencyInput(result)
                 .setToCurrencyInput(toCurrencyInput)
