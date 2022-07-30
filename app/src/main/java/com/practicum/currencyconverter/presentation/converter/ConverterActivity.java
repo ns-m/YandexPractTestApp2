@@ -54,8 +54,9 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
             binding.currencyCourseTextView.setVisibility(View.INVISIBLE);
             binding.currencyChangeTextView.setVisibility(View.INVISIBLE);
         } else {
-            // кажется, злые тролли сломали наше приложение ༼ つ ◕_◕ ༽つ
-            // нам срочно нужно написать здесь код, чтоб спасти пользователей от вечной загрузки и испорченных нервов
+            binding.progressBar.setVisibility(View.INVISIBLE);
+            binding.currencyCourseTextView.setVisibility(View.VISIBLE);
+            binding.currencyChangeTextView.setVisibility(View.VISIBLE);
         }
     }
 
