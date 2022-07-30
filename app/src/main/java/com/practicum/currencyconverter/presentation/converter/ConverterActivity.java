@@ -98,8 +98,7 @@ public class ConverterActivity extends BaseActivity<ConverterViewModel> {
             @Override
             public void afterTextChanged(final Editable s) {
                 final boolean needShowConvertButton = s.length() > 0;
-
-                // кажется, здесь тоже не хватает чего-то (°ロ°)
+                binding.convertButton.setEnabled(needShowConvertButton);
             }
         });
     }
